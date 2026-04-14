@@ -1,0 +1,177 @@
+.my-posted-jobs-page {
+  min-height: calc(100vh - 160px);
+  background: linear-gradient(180deg, #f8fafc 0%, #eef4ff 100%);
+  padding: 60px 24px;
+}
+
+.my-posted-jobs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.my-posted-jobs-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 36px;
+}
+
+.my-posted-jobs-badge {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.my-posted-jobs-header h1 {
+  margin: 0 0 12px;
+  font-size: 42px;
+  color: #0f172a;
+}
+
+.my-posted-jobs-header p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.8;
+}
+
+.my-posted-jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.my-posted-job-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.05);
+}
+
+.my-posted-job-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.my-posted-job-type {
+  background: #dbeafe;
+  color: #1d4ed8;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.my-posted-job-location {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.my-posted-job-card h2 {
+  margin: 0 0 10px;
+  color: #0f172a;
+}
+
+.my-posted-job-company {
+  margin: 0 0 10px;
+  color: #334155;
+  font-weight: 700;
+}
+
+.my-posted-job-category {
+  margin: 0 0 8px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.my-posted-job-salary {
+  margin: 0 0 12px;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.my-posted-job-desc {
+  margin: 0 0 20px;
+  color: #64748b;
+  line-height: 1.7;
+}
+
+.my-posted-job-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.my-job-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+
+.view-btn {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.edit-btn {
+  background: #f8fafc;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.my-posted-jobs-state,
+.my-posted-jobs-message {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
+  color: #334155;
+}
+
+.my-posted-jobs-message.error {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.my-posted-jobs-message.success {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+@media (max-width: 992px) {
+  .my-posted-jobs-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-posted-jobs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .my-posted-jobs-header h1 {
+    font-size: 32px;
+  }
+}
