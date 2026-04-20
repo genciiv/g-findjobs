@@ -15,6 +15,8 @@ const SingleJob = () => {
   });
   const [loading, setLoading] = useState(true);
   const [applyLoading, setApplyLoading] = useState(false);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const [applicationData, setApplicationData] = useState({
     coverLetter: "",
@@ -23,6 +25,15 @@ const SingleJob = () => {
   });
 
   useEffect(() => {
+    if (!id) {
+      setMessage({
+        text: "ID e punës mungon ose është e pavlefshme.",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+
     const fetchJob = async () => {
       try {
         const response = await API.get(`/jobs/${id}`);
@@ -42,6 +53,23 @@ const SingleJob = () => {
     fetchJob();
   }, [id]);
 
+  useEffect(() => {
+    if (!id) return;
+    if (!isAuthenticated()) return;
+    if (currentUser?.role !== "candidate") return;
+
+    const checkFavorite = async () => {
+      try {
+        const response = await API.get(`/favorites/check/${id}`);
+        setIsFavorite(response.data.isFavorite);
+      } catch {
+        // silent
+      }
+    };
+
+    checkFavorite();
+  }, [id, currentUser?.role]);
+
   const handleChange = (e) => {
     setApplicationData((prev) => ({
       ...prev,
@@ -52,6 +80,14 @@ const SingleJob = () => {
   const handleApply = async (e) => {
     e.preventDefault();
     setMessage({ text: "", type: "" });
+
+    if (!id) {
+      setMessage({
+        text: "ID e punës mungon.",
+        type: "error",
+      });
+      return;
+    }
 
     try {
       setApplyLoading(true);
@@ -80,8 +116,40 @@ const SingleJob = () => {
     }
   };
 
-  const canApply =
-    isAuthenticated() && currentUser?.role === "candidate";
+  const handleToggleFavorite = async () => {
+    if (!id) {
+      setMessage({
+        text: "ID e punës mungon.",
+        type: "error",
+      });
+      return;
+    }
+
+    try {
+      setFavoriteLoading(true);
+
+      const response = await API.post(`/favorites/toggle/${id}`);
+
+      setIsFavorite(response.data.isFavorite);
+
+      setMessage({
+        text: response.data.message,
+        type: "success",
+      });
+    } catch (error) {
+      setMessage({
+        text:
+          error.response?.data?.message ||
+          "Ndodhi një gabim gjatë ruajtjes së punës",
+        type: "error",
+      });
+    } finally {
+      setFavoriteLoading(false);
+    }
+  };
+
+  const canApply = isAuthenticated() && currentUser?.role === "candidate";
+  const canFavorite = isAuthenticated() && currentUser?.role === "candidate";
 
   return (
     <section className="single-job-page">
@@ -100,6 +168,23 @@ const SingleJob = () => {
 
               <h1>{job.title}</h1>
               <p className="single-job-company">{job.companyName}</p>
+
+              {canFavorite && (
+                <div className="single-job-favorite-wrap">
+                  <button
+                    className={`favorite-toggle-btn ${isFavorite ? "saved" : ""}`}
+                    onClick={handleToggleFavorite}
+                    disabled={favoriteLoading}
+                    type="button"
+                  >
+                    {favoriteLoading
+                      ? "Duke ruajtur..."
+                      : isFavorite
+                      ? "★ E ruajtur"
+                      : "☆ Ruaje këtë punë"}
+                  </button>
+                </div>
+              )}
 
               <div className="single-job-meta">
                 <div>

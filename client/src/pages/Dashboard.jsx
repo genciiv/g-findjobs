@@ -73,15 +73,27 @@ const Dashboard = () => {
           </div>
 
           {isCandidate && (
-            <div className="dashboard-box">
-              <h2>Aplikimet e mia</h2>
-              <p>
-                Shiko të gjitha punët ku ke aplikuar dhe statusin e secilit aplikim.
-              </p>
-              <Link to="/my-applications" className="dashboard-link-btn">
-                Hap Aplikimet
-              </Link>
-            </div>
+            <>
+              <div className="dashboard-box">
+                <h2>Aplikimet e mia</h2>
+                <p>
+                  Shiko të gjitha punët ku ke aplikuar dhe statusin e secilit aplikim.
+                </p>
+                <Link to="/my-applications" className="dashboard-link-btn">
+                  Hap Aplikimet
+                </Link>
+              </div>
+
+              <div className="dashboard-box">
+                <h2>Favorite Jobs</h2>
+                <p>
+                  Ruaj punët që të pëlqejnë dhe kthehu t’i shohësh më vonë.
+                </p>
+                <Link to="/my-favorites" className="dashboard-link-btn">
+                  Hap Favorites
+                </Link>
+              </div>
+            </>
           )}
 
           {isCompanyOrAdmin && (

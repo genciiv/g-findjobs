@@ -17,6 +17,7 @@ import MyApplications from "./pages/MyApplications";
 import CompanyApplications from "./pages/CompanyApplications";
 import MyPostedJobs from "./pages/MyPostedJobs";
 import EditJob from "./pages/EditJob";
+import MyFavoriteJobs from "./pages/MyFavoriteJobs";
 
 import WordpressWebsite from "./pages/WordpressWebsite";
 import EcommerceWebsite from "./pages/EcommerceWebsite";
@@ -82,6 +83,15 @@ function App() {
           element={
             <ProtectedRoute>
               <CompanyApplications />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/my-favorites"
+          element={
+            <ProtectedRoute>
+              <MyFavoriteJobs />
             </ProtectedRoute>
           }
         />

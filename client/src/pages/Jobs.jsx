@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import API from "../api";
 import "../styles/jobs.css";
 
 const Jobs = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [jobs, setJobs] = useState([]);
   const [pagination, setPagination] = useState({
     totalJobs: 0,
@@ -22,11 +24,11 @@ const Jobs = () => {
   const [loading, setLoading] = useState(true);
 
   const [filters, setFilters] = useState({
-    search: "",
-    category: "",
-    location: "",
-    jobType: "",
-    sortBy: "latest",
+    search: searchParams.get("search") || "",
+    category: searchParams.get("category") || "",
+    location: searchParams.get("location") || "",
+    jobType: searchParams.get("jobType") || "",
+    sortBy: searchParams.get("sortBy") || "latest",
   });
 
   const fetchJobs = async (customFilters = filters, pageNumber = 1) => {
@@ -36,27 +38,29 @@ const Jobs = () => {
       const queryParams = new URLSearchParams();
 
       if (customFilters.search.trim()) {
-        queryParams.append("search", customFilters.search.trim());
+        queryParams.set("search", customFilters.search.trim());
       }
 
       if (customFilters.category.trim()) {
-        queryParams.append("category", customFilters.category.trim());
+        queryParams.set("category", customFilters.category.trim());
       }
 
       if (customFilters.location.trim()) {
-        queryParams.append("location", customFilters.location.trim());
+        queryParams.set("location", customFilters.location.trim());
       }
 
       if (customFilters.jobType.trim()) {
-        queryParams.append("jobType", customFilters.jobType.trim());
+        queryParams.set("jobType", customFilters.jobType.trim());
       }
 
       if (customFilters.sortBy.trim()) {
-        queryParams.append("sortBy", customFilters.sortBy.trim());
+        queryParams.set("sortBy", customFilters.sortBy.trim());
       }
 
-      queryParams.append("page", pageNumber);
-      queryParams.append("limit", 6);
+      queryParams.set("page", pageNumber);
+      queryParams.set("limit", 6);
+
+      setSearchParams(queryParams);
 
       const response = await API.get(`/jobs?${queryParams.toString()}`);
 
@@ -85,7 +89,19 @@ const Jobs = () => {
   };
 
   useEffect(() => {
-    fetchJobs();
+    const initialFilters = {
+      search: searchParams.get("search") || "",
+      category: searchParams.get("category") || "",
+      location: searchParams.get("location") || "",
+      jobType: searchParams.get("jobType") || "",
+      sortBy: searchParams.get("sortBy") || "latest",
+    };
+
+    const initialPage = Number(searchParams.get("page")) || 1;
+
+    setFilters(initialFilters);
+    fetchJobs(initialFilters, initialPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e) => {
@@ -242,7 +258,7 @@ const Jobs = () => {
                   <p className="job-list-category">{job.category}</p>
                   <p className="job-list-salary">{job.salary}</p>
                   <p className="job-list-desc">
-                    {job.description.length > 120
+                    {job.description?.length > 120
                       ? `${job.description.slice(0, 120)}...`
                       : job.description}
                   </p>

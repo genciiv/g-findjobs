@@ -119,6 +119,12 @@ const Navbar = () => {
                 </Link>
               )}
 
+              {isCandidate && (
+                <Link to="/my-favorites" className="btn btn-light">
+                  Favorites
+                </Link>
+              )}
+
               {isCompanyOrAdmin && (
                 <Link to="/company-applications" className="btn btn-light">
                   Kandidatët

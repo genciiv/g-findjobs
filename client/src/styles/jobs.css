@@ -219,6 +219,28 @@
   align-items: start;
 }
 
+.single-job-favorite-wrap {
+  margin: 18px 0 6px;
+}
+
+.favorite-toggle-btn {
+  min-height: 46px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.favorite-toggle-btn.saved {
+  background: #fff7ed;
+  border-color: #fdba74;
+  color: #9a3412;
+}
+
 .single-job-meta {
   display: grid;
   grid-template-columns: 1fr 1fr;
