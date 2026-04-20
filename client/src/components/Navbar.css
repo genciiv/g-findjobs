@@ -15,22 +15,23 @@ a {
 
 .site-header {
   width: 100%;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
   border-bottom: 1px solid #e2e8f0;
   position: sticky;
   top: 0;
   z-index: 1000;
+  backdrop-filter: blur(10px);
 }
 
 .container {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
 .navbar {
-  min-height: 78px;
+  min-height: 82px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -38,10 +39,10 @@ a {
 }
 
 .logo {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 800;
   color: #0f172a;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   white-space: nowrap;
 }
 
@@ -55,7 +56,7 @@ a {
 .nav-link {
   color: #334155;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   transition: color 0.3s ease;
   white-space: nowrap;
 }
@@ -94,8 +95,8 @@ a {
   min-width: 520px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 18px;
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
   padding: 24px;
   display: flex;
   gap: 36px;
@@ -110,7 +111,7 @@ a {
 
 .dropdown-title {
   margin: 0 0 4px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   color: #0f172a;
 }
@@ -171,7 +172,7 @@ a {
   cursor: pointer;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1150px) {
   .navbar {
     flex-wrap: wrap;
     justify-content: center;
@@ -188,6 +189,8 @@ a {
 
   .nav-actions {
     order: 2;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .dropdown-menu {

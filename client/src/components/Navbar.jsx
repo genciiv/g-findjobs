@@ -48,9 +48,17 @@ const Navbar = () => {
         </Link>
 
         <nav className="nav-center">
-          <Link to="/" className="nav-link">Kryefaqja</Link>
-          <Link to="/jobs" className="nav-link">Punët</Link>
-          <Link to="/about" className="nav-link">Rreth Nesh</Link>
+          <Link to="/" className="nav-link">
+            Kryefaqja
+          </Link>
+
+          <Link to="/jobs" className="nav-link">
+            Punët
+          </Link>
+
+          <Link to="/about" className="nav-link">
+            Rreth Nesh
+          </Link>
 
           <div className="dropdown-wrapper" ref={dropdownRef}>
             <button
@@ -58,7 +66,7 @@ const Navbar = () => {
               onClick={() => setShowServices(!showServices)}
               type="button"
             >
-              Sherbimet
+              Shërbimet
               <span className={`arrow ${showServices ? "open" : ""}`}>▾</span>
             </button>
 
@@ -66,29 +74,50 @@ const Navbar = () => {
               <div className="dropdown-menu">
                 <div className="dropdown-column">
                   <p className="dropdown-title">Web Design</p>
-                  <Link to="/services/wordpress-website" onClick={() => setShowServices(false)}>
+                  <Link
+                    to="/services/wordpress-website"
+                    onClick={() => setShowServices(false)}
+                  >
                     WordPress Website
                   </Link>
-                  <Link to="/services/ecommerce-website" onClick={() => setShowServices(false)}>
+                  <Link
+                    to="/services/ecommerce-website"
+                    onClick={() => setShowServices(false)}
+                  >
                     Ecommerce Website
                   </Link>
-                  <Link to="/services/custom-cms-website" onClick={() => setShowServices(false)}>
+                  <Link
+                    to="/services/custom-cms-website"
+                    onClick={() => setShowServices(false)}
+                  >
                     Custom CMS Website
                   </Link>
                 </div>
 
                 <div className="dropdown-column">
                   <p className="dropdown-title">Online Marketing</p>
-                  <Link to="/services/digital-branding" onClick={() => setShowServices(false)}>
+                  <Link
+                    to="/services/digital-branding"
+                    onClick={() => setShowServices(false)}
+                  >
                     Digital Branding
                   </Link>
-                  <Link to="/services/email-marketing" onClick={() => setShowServices(false)}>
+                  <Link
+                    to="/services/email-marketing"
+                    onClick={() => setShowServices(false)}
+                  >
                     E-mail Marketing
                   </Link>
-                  <Link to="/services/social-media-marketing" onClick={() => setShowServices(false)}>
+                  <Link
+                    to="/services/social-media-marketing"
+                    onClick={() => setShowServices(false)}
+                  >
                     Social Media Marketing
                   </Link>
-                  <Link to="/services/seo-optimizing" onClick={() => setShowServices(false)}>
+                  <Link
+                    to="/services/seo-optimizing"
+                    onClick={() => setShowServices(false)}
+                  >
                     SEO Optimizing
                   </Link>
                 </div>
@@ -96,7 +125,9 @@ const Navbar = () => {
             )}
           </div>
 
-          <Link to="/contact" className="nav-link">Na Kontaktoni</Link>
+          <Link to="/contact" className="nav-link">
+            Na Kontaktoni
+          </Link>
         </nav>
 
         <div className="nav-actions">
@@ -150,14 +181,21 @@ const Navbar = () => {
                 {currentUser?.fullName?.split(" ")[0] || "Dashboard"}
               </Link>
 
-              <button className="btn btn-primary logout-btn" onClick={handleLogout}>
+              <button
+                className="btn btn-primary logout-btn"
+                onClick={handleLogout}
+              >
                 Dilni
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="btn btn-light">Identifikohuni</Link>
-              <Link to="/register" className="btn btn-primary">Regjistrohuni</Link>
+              <Link to="/login" className="btn btn-light">
+                Identifikohuni
+              </Link>
+              <Link to="/register" className="btn btn-primary">
+                Regjistrohuni
+              </Link>
             </>
           )}
         </div>
