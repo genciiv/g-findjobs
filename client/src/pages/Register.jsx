@@ -1,144 +1,87 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import API from "../api";
-import "../styles/auth.css";
-import { saveAuthData } from "../utils/auth";
+import DashboardLayout from "../components/DashboardLayout";
+import "../styles/profile.css";
 
-const Register = () => {
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    role: "candidate",
-  });
-
+const Profile = () => {
+  const [user, setUser] = useState(null);
   const [message, setMessage] = useState({
     text: "",
     type: "",
   });
+  const [loading, setLoading] = useState(true);
 
-  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await API.get("/auth/me");
+        setUser(response.data.user);
+      } catch (error) {
+        setMessage({
+          text:
+            error.response?.data?.message ||
+            "Nuk u arrit të merret profili i përdoruesit",
+          type: "error",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage({ text: "", type: "" });
-
-    try {
-      setLoading(true);
-
-      const response = await API.post("/auth/register", formData);
-
-      saveAuthData(response.data.token, response.data.user);
-
-      setMessage({
-        text: "Regjistrimi u krye me sukses. Po kaloni në dashboard...",
-        type: "success",
-      });
-
-      setFormData({
-        fullName: "",
-        email: "",
-        password: "",
-        role: "candidate",
-      });
-
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1200);
-    } catch (error) {
-      setMessage({
-        text:
-          error.response?.data?.message || "Ndodhi një gabim gjatë regjistrimit",
-        type: "error",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    fetchCurrentUser();
+  }, []);
 
   return (
-    <section className="auth-page">
-      <div className="auth-container">
-        <div className="auth-card">
-          <span className="auth-badge">Krijo llogarinë tënde</span>
-          <h1>Regjistrohuni</h1>
-          <p>
-            Plotëso të dhënat për të krijuar një llogari si kandidat ose kompani.
-          </p>
-
+    <DashboardLayout title="Profile">
+      {loading ? (
+        <div className="profile-card">
+          <p>Duke ngarkuar profilin...</p>
+        </div>
+      ) : (
+        <div className="profile-card">
           {message.text && (
-            <div className={`auth-message ${message.type}`}>
+            <div className={`profile-message ${message.type}`}>
               {message.text}
             </div>
           )}
 
-          <form className="auth-form" onSubmit={handleSubmit}>
-            <div className="auth-form-group">
-              <label>Emri i plotë</label>
-              <input
-                type="text"
-                name="fullName"
-                placeholder="Shkruaj emrin e plotë"
-                value={formData.fullName}
-                onChange={handleChange}
-              />
+          {user && (
+            <div className="profile-grid">
+              <div className="profile-item">
+                <h3>Emri i plotë</h3>
+                <p>{user.fullName}</p>
+              </div>
+
+              <div className="profile-item">
+                <h3>Email</h3>
+                <p>{user.email}</p>
+              </div>
+
+              <div className="profile-item">
+                <h3>Roli</h3>
+                <p>{user.role}</p>
+              </div>
+
+              <div className="profile-item">
+                <h3>Krijuar më</h3>
+                <p>{new Date(user.createdAt).toLocaleString()}</p>
+              </div>
+
+              <div className="profile-item">
+                <h3>Përditësuar më</h3>
+                <p>{new Date(user.updatedAt).toLocaleString()}</p>
+              </div>
+
+              <div className="profile-item">
+                <h3>ID</h3>
+                <p>{user.id}</p>
+              </div>
             </div>
-
-            <div className="auth-form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="Shkruaj email-in"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="auth-form-group">
-              <label>Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder="Shkruaj password-in"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="auth-form-group">
-              <label>Roli</label>
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-              >
-                <option value="candidate">Kandidat</option>
-                <option value="company">Kompani</option>
-              </select>
-            </div>
-
-            <button type="submit" className="auth-submit-btn" disabled={loading}>
-              {loading ? "Duke u regjistruar..." : "Regjistrohu"}
-            </button>
-          </form>
-
-          <div className="auth-footer-text">
-            Ke tashmë një llogari? <Link to="/login">Identifikohu</Link>
-          </div>
+          )}
         </div>
-      </div>
-    </section>
+      )}
+    </DashboardLayout>
   );
 };
 
-export default Register;
+export default Profile;

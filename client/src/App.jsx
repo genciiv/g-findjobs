@@ -18,6 +18,9 @@ import CompanyApplications from "./pages/CompanyApplications";
 import MyPostedJobs from "./pages/MyPostedJobs";
 import EditJob from "./pages/EditJob";
 import MyFavoriteJobs from "./pages/MyFavoriteJobs";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminUsers from "./pages/AdminUsers";
+import AdminJobs from "./pages/AdminJobs";
 
 import WordpressWebsite from "./pages/WordpressWebsite";
 import EcommerceWebsite from "./pages/EcommerceWebsite";
@@ -110,6 +113,33 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute>
+              <AdminUsers />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/jobs"
+          element={
+            <ProtectedRoute>
+              <AdminJobs />
             </ProtectedRoute>
           }
         />

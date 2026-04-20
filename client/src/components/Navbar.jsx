@@ -38,6 +38,7 @@ const Navbar = () => {
     currentUser?.role === "company" || currentUser?.role === "admin";
 
   const isCandidate = currentUser?.role === "candidate";
+  const isAdmin = currentUser?.role === "admin";
 
   return (
     <header className="site-header">
@@ -129,6 +130,20 @@ const Navbar = () => {
                 <Link to="/company-applications" className="btn btn-light">
                   Kandidatët
                 </Link>
+              )}
+
+              {isAdmin && (
+                <>
+                  <Link to="/admin" className="btn btn-light">
+                    Admin
+                  </Link>
+                  <Link to="/admin/users" className="btn btn-light">
+                    Users
+                  </Link>
+                  <Link to="/admin/jobs" className="btn btn-light">
+                    Jobs
+                  </Link>
+                </>
               )}
 
               <Link to="/dashboard" className="btn btn-light">

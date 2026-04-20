@@ -13,6 +13,9 @@ import "./styles/post-job.css";
 import "./styles/applications.css";
 import "./styles/my-posted-jobs.css";
 import "./styles/favorites.css";
+import "./styles/admin.css";
+import "./styles/admin-layout.css";
+import "./styles/dashboard-layout.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
