@@ -1,70 +1,98 @@
 .auth-page {
   min-height: calc(100vh - 160px);
+  background: linear-gradient(180deg, #f8fafc 0%, #eef4ff 100%);
+  padding: 60px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 24px;
-  background: linear-gradient(180deg, #f8fafc 0%, #eef4ff 100%);
 }
 
-.auth-container {
+.auth-shell {
   width: 100%;
-  max-width: 520px;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 0.95fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.auth-side-info {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #60a5fa 100%);
+  border-radius: 28px;
+  padding: 40px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-badge {
+  display: inline-flex;
+  width: fit-content;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.auth-side-info h1 {
+  margin: 0 0 18px;
+  font-size: 44px;
+  line-height: 1.15;
+}
+
+.auth-side-info p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.9;
+  font-size: 16px;
 }
 
 .auth-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 24px;
-  padding: 34px 30px;
+  border-radius: 28px;
+  padding: 36px;
   box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
 }
 
-.auth-badge {
-  display: inline-block;
-  background: #dbeafe;
-  color: #1d4ed8;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 8px 14px;
-  border-radius: 999px;
-  margin-bottom: 16px;
-}
-
-.auth-card h1 {
+.auth-card h2 {
   margin: 0 0 10px;
   font-size: 34px;
   color: #0f172a;
 }
 
-.auth-card p {
+.auth-subtext {
   margin: 0 0 24px;
   color: #64748b;
-  line-height: 1.7;
-  font-size: 15px;
+  line-height: 1.8;
 }
 
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
-.auth-form-group {
+.auth-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.auth-form-group label {
+.auth-group label {
   font-size: 14px;
   font-weight: 700;
   color: #334155;
 }
 
-.auth-form-group input,
-.auth-form-group select {
-  height: 52px;
+.auth-group input,
+.auth-group select {
+  width: 100%;
+  height: 54px;
   border: 1px solid #cbd5e1;
   border-radius: 14px;
   padding: 0 16px;
@@ -74,13 +102,13 @@
   background: #ffffff;
 }
 
-.auth-form-group input:focus,
-.auth-form-group select:focus {
+.auth-group input:focus,
+.auth-group select:focus {
   border-color: #2563eb;
 }
 
-.auth-submit-btn {
-  height: 54px;
+.auth-btn {
+  min-height: 54px;
   border: none;
   border-radius: 14px;
   background: #2563eb;
@@ -88,19 +116,13 @@
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s ease;
-  margin-top: 4px;
-}
-
-.auth-submit-btn:hover {
-  background: #1d4ed8;
 }
 
 .auth-message {
   padding: 14px 16px;
   border-radius: 14px;
   font-size: 14px;
-  line-height: 1.6;
+  margin-bottom: 18px;
 }
 
 .auth-message.success {
@@ -115,14 +137,67 @@
   border: 1px solid #fecaca;
 }
 
-.auth-footer-text {
-  margin-top: 20px;
-  font-size: 14px;
+.auth-switch {
+  margin: 22px 0 0;
   color: #64748b;
-  text-align: center;
+  font-size: 14px;
 }
 
-.auth-footer-text a {
+.auth-switch a {
   color: #2563eb;
   font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .auth-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-side-info h1 {
+    font-size: 34px;
+  }
+}
+
+.auth-divider {
+  position: relative;
+  text-align: center;
+  margin: 18px 0;
+}
+
+.auth-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #e2e8f0;
+  transform: translateY(-50%);
+}
+
+.auth-divider span {
+  position: relative;
+  background: #ffffff;
+  padding: 0 12px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.google-auth-btn {
+  width: 100%;
+  min-height: 54px;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.google-auth-btn:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+  background: #eff6ff;
 }

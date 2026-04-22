@@ -1,20 +1,19 @@
 import axios from "axios";
+import { getStoredToken } from "./utils/auth";
 
 const API = axios.create({
   baseURL: "http://localhost:5000/api",
+  withCredentials: true,
 });
 
-API.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("token");
+API.interceptors.request.use((config) => {
+  const token = getStoredToken();
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
 
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+  return config;
+});
 
 export default API;

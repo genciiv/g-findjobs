@@ -6,7 +6,7 @@
 }
 
 .jobs-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -141,6 +141,10 @@
   box-shadow: 0 14px 30px rgba(15, 23, 42, 0.05);
 }
 
+.modern-card {
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+}
+
 .job-list-top,
 .single-job-top {
   display: flex;
@@ -214,9 +218,15 @@
 
 .single-job-layout {
   display: grid;
-  grid-template-columns: 1.3fr 0.8fr;
+  grid-template-columns: 1.25fr 0.9fr;
   gap: 24px;
   align-items: start;
+}
+
+.job-sidebar-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .single-job-favorite-wrap {

@@ -156,6 +156,10 @@ const Home = () => {
     navigate(`/jobs?${queryParams.toString()}`);
   };
 
+  const openCategory = (category) => {
+    navigate(`/jobs?category=${encodeURIComponent(category)}`);
+  };
+
   return (
     <main className="home-page">
       <section className="hero-section">
@@ -370,17 +374,21 @@ const Home = () => {
             <span className="section-label">Kategoritë</span>
             <h2>Eksploro fusha të ndryshme punësimi</h2>
             <p>
-              Gjej mundësi pune në sektorë të ndryshëm sipas aftësive dhe interesit
-              tënd.
+              Kliko një kategori dhe shiko menjëherë punët e asaj fushe.
             </p>
           </div>
 
           <div className="categories-grid">
             {categories.map((category, index) => (
-              <div className="category-card" key={index}>
+              <button
+                type="button"
+                className="category-card category-clickable"
+                key={index}
+                onClick={() => openCategory(category)}
+              >
                 <h3>{category}</h3>
                 <p>Shiko njoftime dhe mundësi të reja në këtë kategori.</p>
-              </div>
+              </button>
             ))}
           </div>
         </div>

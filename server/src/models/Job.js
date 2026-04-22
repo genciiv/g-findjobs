@@ -24,6 +24,16 @@ const jobSchema = new mongoose.Schema(
     },
     category: {
       type: String,
+      enum: [
+        "IT & Software",
+        "Marketing & Media",
+        "Graphic Design",
+        "Sales & Business",
+        "Finance",
+        "Administration",
+        "Education",
+        "Remote Jobs",
+      ],
       required: [true, "Category is required"],
       trim: true,
     },

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api";
-import "../styles/auth.css";
 import { saveAuthData } from "../utils/auth";
+import "../styles/auth.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,6 +26,10 @@ const Login = () => {
     }));
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:5000/api/auth/google";
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage({ text: "", type: "" });
@@ -38,22 +42,16 @@ const Login = () => {
       saveAuthData(response.data.token, response.data.user);
 
       setMessage({
-        text: "Identifikimi u krye me sukses. Po kaloni në dashboard...",
+        text: response.data.message || "Login me sukses",
         type: "success",
-      });
-
-      setFormData({
-        email: "",
-        password: "",
       });
 
       setTimeout(() => {
         navigate("/dashboard");
-      }, 1200);
+      }, 700);
     } catch (error) {
       setMessage({
-        text:
-          error.response?.data?.message || "Ndodhi një gabim gjatë identifikimit",
+        text: error.response?.data?.message || "Login dështoi",
         type: "error",
       });
     } finally {
@@ -62,52 +60,68 @@ const Login = () => {
   };
 
   return (
-    <section className="auth-page">
-      <div className="auth-container">
-        <div className="auth-card">
-          <span className="auth-badge">Mirë se u rikthyet</span>
-          <h1>Identifikohuni</h1>
+    <section className="auth-page premium-auth">
+      <div className="auth-shell">
+        <div className="auth-side-info">
+          <span className="auth-badge">Welcome Back</span>
+          <h1>Hyr në llogarinë tënde</h1>
           <p>
-            Hyni në llogarinë tuaj për të aplikuar për punë ose për të menaxhuar njoftimet.
+            Menaxho aplikimet, punët e publikuara, favorites dhe gjithë
+            aktivitetin tënd në G-FindJobs nga një panel modern dhe profesional.
           </p>
+        </div>
+
+        <div className="auth-card premium-card">
+          <h2>Identifikohuni</h2>
+          <p className="auth-subtext">Hyni për të vazhduar në platformë.</p>
 
           {message.text && (
-            <div className={`auth-message ${message.type}`}>
-              {message.text}
-            </div>
+            <div className={`auth-message ${message.type}`}>{message.text}</div>
           )}
 
           <form className="auth-form" onSubmit={handleSubmit}>
-            <div className="auth-form-group">
+            <div className="auth-group">
               <label>Email</label>
               <input
                 type="email"
                 name="email"
-                placeholder="Shkruaj email-in"
+                placeholder="Vendos email-in"
                 value={formData.email}
                 onChange={handleChange}
               />
             </div>
 
-            <div className="auth-form-group">
+            <div className="auth-group">
               <label>Password</label>
               <input
                 type="password"
                 name="password"
-                placeholder="Shkruaj password-in"
+                placeholder="Vendos password-in"
                 value={formData.password}
                 onChange={handleChange}
               />
             </div>
 
-            <button type="submit" className="auth-submit-btn" disabled={loading}>
-              {loading ? "Duke u identifikuar..." : "Identifikohu"}
+            <button type="submit" className="auth-btn" disabled={loading}>
+              {loading ? "Duke hyrë..." : "Hyr"}
             </button>
           </form>
 
-          <div className="auth-footer-text">
-            Nuk ke ende një llogari? <Link to="/register">Regjistrohu</Link>
+          <div className="auth-divider">
+            <span>ose</span>
           </div>
+
+          <button
+            type="button"
+            className="google-auth-btn"
+            onClick={handleGoogleLogin}
+          >
+            Continue with Google
+          </button>
+
+          <p className="auth-switch">
+            Nuk ke llogari? <Link to="/register">Regjistrohu</Link>
+          </p>
         </div>
       </div>
     </section>

@@ -13,6 +13,10 @@ const SingleJob = () => {
     text: "",
     type: "",
   });
+  const [contactMessage, setContactMessage] = useState({
+    text: "",
+    type: "",
+  });
   const [loading, setLoading] = useState(true);
   const [applyLoading, setApplyLoading] = useState(false);
   const [favoriteLoading, setFavoriteLoading] = useState(false);
@@ -22,6 +26,12 @@ const SingleJob = () => {
     coverLetter: "",
     phone: "",
     cvLink: "",
+  });
+
+  const [contactData, setContactData] = useState({
+    name: currentUser?.fullName || "",
+    email: currentUser?.email || "",
+    message: "",
   });
 
   useEffect(() => {
@@ -72,6 +82,13 @@ const SingleJob = () => {
 
   const handleChange = (e) => {
     setApplicationData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleContactChange = (e) => {
+    setContactData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -148,6 +165,28 @@ const SingleJob = () => {
     }
   };
 
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+
+    if (!contactData.name || !contactData.email || !contactData.message) {
+      setContactMessage({
+        text: "Ju lutem plotësoni të gjitha fushat e kontaktit.",
+        type: "error",
+      });
+      return;
+    }
+
+    setContactMessage({
+      text: `Mesazhi u përgatit për ${job?.postedBy?.email || "kompaninë"}. Për ta bërë realisht funksional, më pas lidhet me email service.`,
+      type: "success",
+    });
+
+    setContactData((prev) => ({
+      ...prev,
+      message: "",
+    }));
+  };
+
   const canApply = isAuthenticated() && currentUser?.role === "candidate";
   const canFavorite = isAuthenticated() && currentUser?.role === "candidate";
 
@@ -159,8 +198,8 @@ const SingleJob = () => {
         ) : message.text && !job ? (
           <div className={`jobs-message ${message.type}`}>{message.text}</div>
         ) : job ? (
-          <div className="single-job-layout">
-            <div className="single-job-card">
+          <div className="single-job-layout modern">
+            <div className="single-job-card modern-card">
               <div className="single-job-top">
                 <span className="job-list-type">{job.jobType}</span>
                 <span className="job-list-location">{job.location}</span>
@@ -216,64 +255,116 @@ const SingleJob = () => {
               </div>
             </div>
 
-            <div className="apply-card">
-              <span className="jobs-badge">Aplikim</span>
-              <h2>Apliko për këtë punë</h2>
+            <div className="job-sidebar-stack">
+              <div className="apply-card modern-card">
+                <span className="jobs-badge">Aplikim</span>
+                <h2>Apliko për këtë punë</h2>
 
-              {message.text && (
-                <div className={`jobs-message ${message.type}`} style={{ textAlign: "left" }}>
-                  {message.text}
-                </div>
-              )}
+                {message.text && (
+                  <div className={`jobs-message ${message.type}`} style={{ textAlign: "left" }}>
+                    {message.text}
+                  </div>
+                )}
 
-              {!isAuthenticated() ? (
-                <p className="apply-note">
-                  Duhet të identifikohesh si kandidat për të aplikuar.
-                </p>
-              ) : currentUser?.role !== "candidate" ? (
-                <p className="apply-note">
-                  Vetëm përdoruesit me rolin kandidat mund të aplikojnë për punë.
-                </p>
-              ) : (
-                <form className="apply-form" onSubmit={handleApply}>
+                {!isAuthenticated() ? (
+                  <p className="apply-note">
+                    Duhet të identifikohesh si kandidat për të aplikuar.
+                  </p>
+                ) : currentUser?.role !== "candidate" ? (
+                  <p className="apply-note">
+                    Vetëm përdoruesit me rolin kandidat mund të aplikojnë për punë.
+                  </p>
+                ) : (
+                  <form className="apply-form" onSubmit={handleApply}>
+                    <div className="apply-group">
+                      <label>Numri i telefonit</label>
+                      <input
+                        type="text"
+                        name="phone"
+                        value={applicationData.phone}
+                        onChange={handleChange}
+                        placeholder="p.sh. +355 69 123 4567"
+                      />
+                    </div>
+
+                    <div className="apply-group">
+                      <label>Link CV</label>
+                      <input
+                        type="text"
+                        name="cvLink"
+                        value={applicationData.cvLink}
+                        onChange={handleChange}
+                        placeholder="p.sh. https://..."
+                      />
+                    </div>
+
+                    <div className="apply-group">
+                      <label>Cover Letter</label>
+                      <textarea
+                        name="coverLetter"
+                        value={applicationData.coverLetter}
+                        onChange={handleChange}
+                        placeholder="Shkruaj një prezantim të shkurtër"
+                        rows="6"
+                      />
+                    </div>
+
+                    <button type="submit" className="job-apply-btn" disabled={applyLoading || !canApply}>
+                      {applyLoading ? "Duke aplikuar..." : "Dërgo Aplikimin"}
+                    </button>
+                  </form>
+                )}
+              </div>
+
+              <div className="apply-card modern-card">
+                <span className="jobs-badge">Kontakto Kompaninë</span>
+                <h2>Dërgo interesin tënd</h2>
+
+                {contactMessage.text && (
+                  <div className={`jobs-message ${contactMessage.type}`} style={{ textAlign: "left" }}>
+                    {contactMessage.text}
+                  </div>
+                )}
+
+                <form className="apply-form" onSubmit={handleContactSubmit}>
                   <div className="apply-group">
-                    <label>Numri i telefonit</label>
+                    <label>Emri</label>
                     <input
                       type="text"
-                      name="phone"
-                      value={applicationData.phone}
-                      onChange={handleChange}
-                      placeholder="p.sh. +355 69 123 4567"
+                      name="name"
+                      value={contactData.name}
+                      onChange={handleContactChange}
+                      placeholder="Emri juaj"
                     />
                   </div>
 
                   <div className="apply-group">
-                    <label>Link CV</label>
+                    <label>Email</label>
                     <input
-                      type="text"
-                      name="cvLink"
-                      value={applicationData.cvLink}
-                      onChange={handleChange}
-                      placeholder="p.sh. https://..."
+                      type="email"
+                      name="email"
+                      value={contactData.email}
+                      onChange={handleContactChange}
+                      placeholder="Email juaj"
                     />
                   </div>
 
                   <div className="apply-group">
-                    <label>Cover Letter</label>
+                    <label>Mesazhi</label>
                     <textarea
-                      name="coverLetter"
-                      value={applicationData.coverLetter}
-                      onChange={handleChange}
-                      placeholder="Shkruaj një prezantim të shkurtër"
-                      rows="6"
+                      name="message"
+                      value={contactData.message}
+                      onChange={handleContactChange}
+                      placeholder={`Përshëndetje ${job.companyName}, jam i interesuar për këtë pozicion...`}
+                      rows="5"
                     />
                   </div>
 
-                  <button type="submit" className="job-apply-btn" disabled={applyLoading || !canApply}>
-                    {applyLoading ? "Duke aplikuar..." : "Dërgo Aplikimin"}
+                  <button type="submit" className="job-apply-btn">
+                    Kontakto
                   </button>
                 </form>
-              )}
+              </div>
             </div>
           </div>
         ) : null}

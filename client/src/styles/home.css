@@ -520,3 +520,13 @@
     padding: 28px;
   }
 }
+
+.category-clickable {
+  cursor: pointer;
+  text-align: left;
+  border: 1px solid #e2e8f0;
+}
+
+.category-clickable:hover {
+  border-color: #2563eb;
+}

@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import GoogleAuthSuccess from "./pages/GoogleAuthSuccess";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Jobs from "./pages/Jobs";
@@ -41,6 +42,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/google-auth-success" element={<GoogleAuthSuccess />} />
 
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/jobs/:id" element={<SingleJob />} />
@@ -48,7 +50,7 @@ function App() {
         <Route
           path="/post-job"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["company", "admin"]}>
               <PostJob />
             </ProtectedRoute>
           }
@@ -57,7 +59,7 @@ function App() {
         <Route
           path="/my-posted-jobs"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["company", "admin"]}>
               <MyPostedJobs />
             </ProtectedRoute>
           }
@@ -66,7 +68,7 @@ function App() {
         <Route
           path="/edit-job/:id"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["company", "admin"]}>
               <EditJob />
             </ProtectedRoute>
           }
@@ -75,7 +77,7 @@ function App() {
         <Route
           path="/my-applications"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["candidate"]}>
               <MyApplications />
             </ProtectedRoute>
           }
@@ -84,7 +86,7 @@ function App() {
         <Route
           path="/company-applications"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["company", "admin"]}>
               <CompanyApplications />
             </ProtectedRoute>
           }
@@ -93,7 +95,7 @@ function App() {
         <Route
           path="/my-favorites"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["candidate"]}>
               <MyFavoriteJobs />
             </ProtectedRoute>
           }
@@ -102,7 +104,7 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["candidate", "company", "admin"]}>
               <Dashboard />
             </ProtectedRoute>
           }
@@ -111,7 +113,7 @@ function App() {
         <Route
           path="/profile"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["candidate", "company", "admin"]}>
               <Profile />
             </ProtectedRoute>
           }
@@ -120,7 +122,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["admin"]}>
               <AdminDashboard />
             </ProtectedRoute>
           }
@@ -129,7 +131,7 @@ function App() {
         <Route
           path="/admin/users"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["admin"]}>
               <AdminUsers />
             </ProtectedRoute>
           }
@@ -138,7 +140,7 @@ function App() {
         <Route
           path="/admin/jobs"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["admin"]}>
               <AdminJobs />
             </ProtectedRoute>
           }
